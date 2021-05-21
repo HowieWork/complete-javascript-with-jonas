@@ -173,6 +173,7 @@ class PersonCl {
     this.birthYear = birthYear;
   }
 
+  // Instance method
   // Method will be added to .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -198,12 +199,17 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  // Static method
+  static hey() {
+    console.log('Hey there :)');
+    console.log(this);
+  }
 }
 
 // PersonCl.prototype.greet = function () {
 //   console.log(`Hey ${this.firstName}`);
 // };
-
 const jessica = new PersonCl('Jessica White', 1996);
 // console.log(jessica.fullName);
 // console.log(jessica);
@@ -243,6 +249,11 @@ account.latest = 50; // treat as PROPERTIES
 ///////////////////////////////////////////////////
 
 // NOTE 9. Static Methods
+console.log(Number.parseFloat('12'));
+Person.hey = function () {
+  console.log(`Hey!`);
+};
+// Person.hey();
 ///////////////////////////////////////////////////
 
 // NOTE 10. Object.create
