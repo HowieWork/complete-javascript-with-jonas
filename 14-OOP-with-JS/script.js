@@ -249,14 +249,41 @@ account.latest = 50; // treat as PROPERTIES
 ///////////////////////////////////////////////////
 
 // NOTE 9. Static Methods
-console.log(Number.parseFloat('12'));
+// Built-in static methods example
+Number.parseFloat('12');
+
+// Create own static method on constructor function
 Person.hey = function () {
   console.log(`Hey!`);
 };
 // Person.hey();
+
+// STATIC keyword to define static method in class (refer to PersonCl example above)
 ///////////////////////////////////////////////////
 
-// NOTE 10. Object.create
+// NOTE 10. Object.create()
+// IMPORTANT Create a new object, using an existing object as the prototype of the newly created object.
+// *prototypal inheritance still applies; NO constructor function; NO .prototype property; NO new keyword
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  // Has NO relation with constructor at all
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+// NOT a good practice of assigning name and birthYear like below
+steven.name = 'Steven';
+steven.birthYear = 2002;
+// steven.calcAge();
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+// sarah.calcAge();
 ///////////////////////////////////////////////////
 
 // Coding Challenge #2
@@ -267,9 +294,40 @@ Person.hey = function () {
 4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
 
 DATA CAR 1: 'Ford' going at 120 km/h
-
-GOOD LUCK 😀
 */
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h.`);
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h.`);
+  }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+// const carFort = new CarCl('Fort', 120);
+// console.log(carFort);
+// console.log(carFort.speedUS);
+// carFort.accelerate();
+// carFort.brake();
+// carFort.brake();
+// carFort.speedUS = 75;
+// console.log(carFort);
 ///////////////////////////////////////////////////
 
 // NOTE 11. Inheritance Between "Classes": Constructor Functions
