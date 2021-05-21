@@ -32,7 +32,13 @@
 // (4) Polymorphism: a child class can OVERWRITE a method it inherited from a parent class
 ///////////////////////////////////////////////////
 
-// 2. OOP in JavaScript
+// NOTE 2. OOP in JavaScript
+// 2.1 Prototype <--(prototypal inheritance / delegation)-- Object
+// Prototypal inheritance: the prototype contains methods (behavior) that are ACCESSIBLE TO ALL OBJECTS LINKED TO THAT PROTOTYPE
+// (another expression) Object DELEGATES behaviors to the linked prototype object
+// IMPORTANT prototypal inheritance is DIFFERENT from classical inheritence
+///////////////////////////////////////////////////
+
 // 3. Constructor Functions and the new Operator
 // 4. Prototypes
 // 5. Prototypal Inheritance and The Prototype Chain
