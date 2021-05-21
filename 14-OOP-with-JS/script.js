@@ -347,7 +347,7 @@ const Student = function (firstName, birthYear, course) {
   this.course = course;
 };
 
-// Linking prototypes
+// IMPORTANT Linking prototypes
 Student.prototype = Object.create(Person.prototype);
 
 Student.prototype.introduce = function () {
@@ -388,6 +388,9 @@ const EV = function (make, speed, charge) {
   this.charge = charge;
 };
 
+// IMPORTANT Link the prototypes
+EV.prototype = Object.create(Car.prototype);
+
 EV.prototype.chargeBattery = function (chargeTo) {
   this.charge = chargeTo;
 };
@@ -402,6 +405,7 @@ EV.prototype.accelerate = function () {
 
 const carTesla = new EV('Tesla', 120, 23);
 // console.log(carTesla);
+// carTesla.brake();
 // carTesla.chargeBattery(98);
 // console.log(carTesla);
 // carTesla.accelerate();
