@@ -49,18 +49,69 @@
 // (2) function is called, this = {}
 // (3) {} linked to prototype
 // (4) function automatically return {}
+// * function Expression and Declaration BOTH work; Arrow f. NOT work
 const Person = function (firstName, birthYear) {
+  // Instance properties
   this.firstName = firstName;
   this.birthYear = birthYear;
+
+  // IMPORTANT NEVER create methods inside a constructor function (cause BAD performance)
+  // this.calcAge = function () {
+  //   console.log(2037 - this.birthYear);
+  // };
 };
 const jonas = new Person('Jonas', 1991);
-console.log(jonas);
+const matilda = new Person('Matilda', 2017);
+const jack = new Person('Jack', 1975);
+// console.log(jonas, matilda, jack);
+
+// 3.2 INSTANCE
+// console.log(jonas instanceof Person); // Check whether instance or not
 ///////////////////////////////////////////////////
 
-// 4. Prototypes
+// NOTE 4. Prototypes
+// 4.1 Every function has a PROTOTYPE property; Methods created inside that property will be ACCESSIBLE to all objects created by the (constructor) function
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+// jonas.calcAge();
+
+// IMPORTANT Person.prototype is the prototype of all objects created by Person (understand .prototype as .prototypeOfLinkedObjects)
+// console.log(Person.prototype.isPrototypeOf(jonas));
+// console.log(jonas.__proto__ === Person.prototype);
+// * __proto__ exists because --(refer)--> 3.1(3) {} linked to prototype
+
+// 4.2 Objects' OWN properties
+Person.prototype.species = 'Homo Sapiens';
+// console.log(jonas.species, matilda.species);
+// console.log(jonas.hasOwnProperty('firstName'));
+// console.log(jonas.hasOwnProperty('species'));
+
+// 4.3 Prototype Chain
+// jonas --(.__proto__)--> Person.prototype --(.__proto__)--> Object.prototype --(.__proto__)--> null
+// FIXME IMPORTANT* Applies to function constructors and ES6 classes NOT Object.create()
 ///////////////////////////////////////////////////
 
-// 5. Prototypal Inheritance and The Prototype Chain
+// NOTE 5. Prototypal Inheritance and The Prototype Chain
+// 5.1
+// console.log(jonas.__proto__);
+// IMPORTANT Object.prototype (top of the prototype chain)
+// console.log(jonas.__proto__.__proto__);
+// console.log(jonas.__proto__.__proto__.__proto__);
+// *inspect function using .dir
+// console.dir(Person.prototype.constructor);
+
+// 5.2 Array
+const arr = [2, 2, 3, 4, 5, 6, 6, 6, 9, 9]; // new Array(2,3,4) === [2,3,4]
+// console.log(arr.__proto__ === Array.prototype);
+// console.log(arr.__proto__.__proto__);
+
+// Add a new method to Array.prototype
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+console.log(arr.unique());
+// 5.3
 ///////////////////////////////////////////////////
 
 // 6. Prototypal Inheritance on Built-In Objects
