@@ -54,6 +54,7 @@
 // (3) {} linked to prototype
 // (4) function automatically return {}
 // * function Expression and Declaration BOTH work; Arrow f. NOT work
+/*
 const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
@@ -64,9 +65,10 @@ const Person = function (firstName, birthYear) {
   //   console.log(2037 - this.birthYear);
   // };
 };
-const jonas = new Person('Jonas', 1991);
-const matilda = new Person('Matilda', 2017);
-const jack = new Person('Jack', 1975);
+*/
+// const jonas = new Person('Jonas', 1991);
+// const matilda = new Person('Matilda', 2017);
+// const jack = new Person('Jack', 1975);
 // console.log(jonas, matilda, jack);
 
 // 3.2 INSTANCE
@@ -76,9 +78,9 @@ const jack = new Person('Jack', 1975);
 // NOTE 4. Prototypes
 
 // 4.1 Every function has a PROTOTYPE property; Methods created inside that property will be ACCESSIBLE to all objects created by the (constructor) function
-Person.prototype.calcAge = function () {
-  console.log(2037 - this.birthYear);
-};
+// Person.prototype.calcAge = function () {
+//   console.log(2037 - this.birthYear);
+// };
 // jonas.calcAge();
 
 // IMPORTANT Person.prototype is the prototype of all objects created by Person (understand .prototype as .prototypeOfLinkedObjects)
@@ -87,7 +89,7 @@ Person.prototype.calcAge = function () {
 // * __proto__ exists because --(refer)--> 3.1(3) {} linked to prototype
 
 // 4.2 Objects' OWN properties
-Person.prototype.species = 'Homo Sapiens';
+// Person.prototype.species = 'Homo Sapiens';
 // console.log(jonas.species, matilda.species);
 // console.log(jonas.hasOwnProperty('firstName'));
 // console.log(jonas.hasOwnProperty('species'));
@@ -96,7 +98,7 @@ Person.prototype.species = 'Homo Sapiens';
 // NOTE 5. Prototypal Inheritance and The Prototype Chain
 // Prototype Chain
 // jonas --(.__proto__)--> Person.prototype --(.__proto__)--> Object.prototype --(.__proto__)--> null
-// FIXME IMPORTANT* Applies to function constructors and ES6 classes NOT Object.create()
+
 ///////////////////////////////////////////////////
 
 // NOTE 6. Prototypal Inheritance on Built-In Objects
@@ -253,9 +255,9 @@ account.latest = 50; // treat as PROPERTIES
 Number.parseFloat('12');
 
 // Create own static method on constructor function
-Person.hey = function () {
-  console.log(`Hey!`);
-};
+// Person.hey = function () {
+//   console.log(`Hey!`);
+// };
 // Person.hey();
 
 // STATIC keyword to define static method in class (refer to PersonCl example above)
@@ -282,6 +284,7 @@ steven.birthYear = 2002;
 // steven.calcAge();
 
 const sarah = Object.create(PersonProto);
+// console.log(sarah); // {}: Object.create will return {}
 sarah.init('Sarah', 1979);
 // sarah.calcAge();
 ///////////////////////////////////////////////////
@@ -331,6 +334,44 @@ class CarCl {
 ///////////////////////////////////////////////////
 
 // NOTE 11. Inheritance Between "Classes": Constructor Functions
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+Person.prototype.calcAge = function () {
+  return 2037 - this.birthYear;
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototypes
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+const mike = new Student('Mike', 2002, 'Computer Science');
+// mike.introduce();
+// console.log(mike.calcAge());
+
+// IMPORTANT
+// console.log(mike.__proto__);
+// console.log(mike.__proto__.__proto__);
+
+// console.log(mike instanceof Student);
+// console.log(mike instanceof Person);
+// console.log(mike instanceof Object);
+
+// IMPORTANT Fix Student.prototype.constructor != Student because of Object.create()
+// console.log(Student.prototype.constructor);
+Student.prototype.constructor = Student;
+// console.log(Student.prototype.constructor);
+
+// console.log(mike.__proto__ === Student.prototype);
+// console.log(Object.getPrototypeOf(Student.prototype));
 ///////////////////////////////////////////////////
 
 // Coding Challenge #3
@@ -341,9 +382,29 @@ class CarCl {
 4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
 
 DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
-
-GOOD LUCK 😀
 */
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}%`
+  );
+};
+
+const carTesla = new EV('Tesla', 120, 23);
+// console.log(carTesla);
+// carTesla.chargeBattery(98);
+// console.log(carTesla);
+// carTesla.accelerate();
 ///////////////////////////////////////////////////
 
 // NOTE 12. Inheritance Between "Classes": ES6 Classes
