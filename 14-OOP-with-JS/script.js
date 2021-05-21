@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 // INDEX
 // 1. What is Object-Oriented Programming?
 // 2. OOP in JavaScript
@@ -37,12 +37,35 @@
 // Prototypal inheritance: the prototype contains methods (behavior) that are ACCESSIBLE TO ALL OBJECTS LINKED TO THAT PROTOTYPE
 // (another expression) Object DELEGATES behaviors to the linked prototype object
 // IMPORTANT prototypal inheritance is DIFFERENT from classical inheritence
+// 2.2 THREE ways of implementing prototypal inheritance in JS
+// (1) Constructor functions
+// (2) ES6 Classes
+// (3) Object.create()
 ///////////////////////////////////////////////////
 
-// 3. Constructor Functions and the new Operator
+// NOTE 3. Constructor Functions and the new Operator
+// 3.1 What happened when you use NEW keyword operator to call a function?
+// (1) New {} is created
+// (2) function is called, this = {}
+// (3) {} linked to prototype
+// (4) function automatically return {}
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+const jonas = new Person('Jonas', 1991);
+console.log(jonas);
+///////////////////////////////////////////////////
+
 // 4. Prototypes
+///////////////////////////////////////////////////
+
 // 5. Prototypal Inheritance and The Prototype Chain
+///////////////////////////////////////////////////
+
 // 6. Prototypal Inheritance on Built-In Objects
+///////////////////////////////////////////////////
+
 // Coding Challenge #1
 ///////////////////////////////////////////////////
 
