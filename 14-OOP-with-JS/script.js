@@ -460,12 +460,96 @@ jay.init('Jay', 2010, 'Computer Science');
 
 // NOTE 14. Another Class Example
 
-///////////////////////////////////////////////////
-
 // NOTE 15. Encapsulation: Protected Properties and Methods
-///////////////////////////////////////////////////
+// IMPORTANT 15.1 TWO reasons of needing ENCAPSULATION and Data Privacy
+// (1) Prevent outside code accidently manipulates data inside class
+// (2) Small API (only a few public interfaces)--> we can change INTERNAL methods MORE confidently (*external code doesn't rely on these private methods)
+// *JS does NOT support TRUE Encapsulation and Data Privacy
+
+// 15.2 Add _ in front of property name (refer 14. _movement)
+// such property is called PROTECTED PROPERTY *indicating such property should NOT be touched outside code
 
 // NOTE 16. Encapsulation: Private Class Field and Methods
+// 1) Public fields (public instance field / public property for instance / will be present on all instances created through class)
+// 2) Private fields
+// 3) Public methods
+// 4) Private methods
+// (there is also the STATIC version --> TOTAL: 8 features)
+// * Static fields/methods will NOT be available on instances, but ONLY available on class itself
+
+class Account {
+  // 1) Public fields (instances)
+  // locale = navigator.language;
+
+  // 2) Private fields (instances)
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    // Protected property
+    this.#pin = pin;
+    // this._movements = [];
+
+    // this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  // 3) Public methods
+  // Public interface (API)
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Load approved`);
+    }
+  }
+
+  static helper() {
+    console.log('Helper');
+  }
+
+  // 4) Private methods (currently NOT working)
+  // #approveLoan(val)
+  _approveLoad(val) {
+    return true;
+  }
+}
+const acc1 = new Account('Jonas', 'EUR', 1111);
+// NOT a good idea to do be BAD below. Create methods instead as GOOD below.
+
+// BAD *outside code SHOULDN'T manipulate data inside class
+// acc1._movements.push(250);
+// acc1._movements.push(-140);
+
+// GOOD
+// acc1.deposit(250);
+// acc1.withdraw(140);
+// acc1.requestLoan(1000);
+
+// console.log(acc1.getMovements());
+// console.log(acc1);
+
+// Accessing Private fields/methods --> caught Error
+// console.log(acc1.#movements);
+// console.log(acc1.#pin);
+// console.log(acc1.#approveLoad(1000));
+
+// Accessing Static fields/methods
+Account.helper();
 ///////////////////////////////////////////////////
 
 // NOTE 17. Chaining Methods
