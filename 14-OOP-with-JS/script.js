@@ -437,14 +437,29 @@ class StudentCl extends PersonCl {
 }
 
 const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
-martha.introduce();
-martha.calcAge();
+// martha.introduce();
+// martha.calcAge();
 ///////////////////////////////////////////////////
 
 // NOTE 13. Inheritance Between "Classes": Object.create
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2010, 'Computer Science');
+// jay.introduce();
+// jay.calcAge();
 ///////////////////////////////////////////////////
 
 // NOTE 14. Another Class Example
+
 ///////////////////////////////////////////////////
 
 // NOTE 15. Encapsulation: Protected Properties and Methods
