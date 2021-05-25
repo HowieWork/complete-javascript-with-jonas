@@ -11,4 +11,4 @@ Course link:
 
 ## Projects
 
-4. (updating) Mapty [Demo](https://howiework.github.io/Mapty/) | [GitHub](https://github.com/HowieWork/Mapty)
+4. (updating) **Mapty** [Demo](https://howiework.github.io/Mapty/) | [GitHub](https://github.com/HowieWork/Mapty)
