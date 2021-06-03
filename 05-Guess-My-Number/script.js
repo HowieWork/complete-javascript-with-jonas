@@ -11,6 +11,7 @@ document.querySelector('.guess').value = 23;
 
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
+let highScore = 0;
 
 // FIXME Delete line of code below
 console.log(secretNumber);
@@ -30,6 +31,11 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
     document.querySelector('.number').textContent = secretNumber;
+
+    // Set up highscore
+    if (score > highScore) {
+      document.querySelector('.highscore').textContent = score;
+    }
 
     // When the guess is too HIGH
   } else if (guess > secretNumber) {
