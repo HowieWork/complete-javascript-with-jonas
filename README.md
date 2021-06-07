@@ -15,4 +15,6 @@ Course link:
 
 2. **Modal** [Demo](https://howiework.github.io/Modal/) | [GitHub](https://github.com/HowieWork/Modal)
 
-3. (updating) **Mapty** [Demo](https://howiework.github.io/Mapty/) | [GitHub](https://github.com/HowieWork/Mapty)
+3. **Pig Game** [Demo](https://howiework.github.io/Pig-game/) | [GitHub](https://github.com/HowieWork/Pig-game)
+
+4. (updating) **Mapty** [Demo](https://howiework.github.io/Mapty/) | [GitHub](https://github.com/HowieWork/Mapty)
