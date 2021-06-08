@@ -113,7 +113,16 @@
 ///////////////////////////////////////////////////
 
 // NOTE 6. Variable Environment: Hoisting and The TDZ
+// 6.1 Hoisting: Makes some types of variables accessible/usable in the code before they are actually declared. “Variables lifted to the top of their scope”. --(BEHIND THE SCENES)-->
+// Before execution, code is scanned for variable declarations, and for each variable, a new property is created in the **variable environment object**.
 
+// 6.2 TDZ: Temporal Dead Zone (Why TDZ? )
+// (1) Makes it easier to avoid and catch errors: accessing variables b4 declaration is bad practice and should be avoided;
+// (2) Makes const variables actually work
+
+// 6.3 Why Hoisting?
+// (1) Using functions before actual declaration;
+// (2) var hoisting is just a byproduct.
 ///////////////////////////////////////////////////
 
 // NOTE 7. Hoisting and TDZ in Practice
