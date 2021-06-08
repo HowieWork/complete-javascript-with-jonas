@@ -55,11 +55,38 @@
 ///////////////////////////////////////////////////
 
 // NOTE 2. The JavaScript Engine and Runtime
+// 2.1 JS Engine: Program that executes JavaScript code.
+
+// 2.2 JS Engine consists of **Call Stack** (Where our code is executed) & **Heap** (Where objects are stored)
+
+// 2.3 Compilation vs. Interpretation
+// (1) COMPILATION: entire code is converted into machine code at once, and written to a binary file that can be executed by a computer.
+// Source code --(step 1: compilation)--> Portable file: machine code --(step 2: execution)--> Program running
+
+// (2) INTERPRETATION: interpreter runs through the source code and executes it line by line.
+// Source code --(execution line by line *code still needs to be converted into machine code)--> Program running
+
+// (3) JUST-IN-TIME (JIT) COMPILATION: entire code is converted into machine code at once, then executed immediately.
+// Source code --(step 1: compilation)--> Machine code *NOT a portable file --(step 2: execution *happens immediately)--> Program running
 
 ///////////////////////////////////////////////////
 
 // NOTE 3. Execution Contexts and The Call Stack
+// 3.1 What is an **Execution Context/EC**?
+// (1) Definition: Environment in which a piece of JavaScript is executed. Stores all the necessary information for some code to be executed.
+// (2) EXECUTION:
+// Creation of exactly one **Global Execution Context** (for top-level code *NOT inside a function)
+// --> Execution of top-level code (inside global EC)
+// --> Execution of functions and waiting for callbacks
 
+// 3.2 What's inside EC? *Below are generated during 'creation phase',right b4 execution
+// (1) Variable Environment: let, const and var; Functions; arguments object
+// (2) Scope chain
+// (3) THIS keyword
+// *arguments object & THIS are NOT in arrow functions
+
+// 3.3 Execution happens in **Call Stack**
+// 'Place' where execution contexts get stacked on top of each other, to keep track of where we are in the execution.
 ///////////////////////////////////////////////////
 
 // NOTE 4. Scope and The Scope Chain
