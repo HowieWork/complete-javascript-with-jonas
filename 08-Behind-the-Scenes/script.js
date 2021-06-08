@@ -90,7 +90,22 @@
 ///////////////////////////////////////////////////
 
 // NOTE 4. Scope and The Scope Chain
+// 4.1 Scoping: How our program’s variables are organized and accessed. “Where do variables live?” or “Where can we access a certain variable, and where not?”;
 
+// 4.2 Lexical scoping: Scoping is controlled by placement of functions and blocks in the code;
+
+// 4.3 Scope: Space or environment in which a certain variable is **declared** (variable environment in case of functions). There is **global scope**, **function scope**, and **block scope**;
+
+// 4.4 Scope of a variable: Region of our code where a certain variable can be **accessed**.
+
+// 4.5 THREE types of scope
+// (1) Global scope
+// (2) Function scope
+// (3) Block scope (ES6): Variables are accessible only inside block. ^ this ONLY applies to LET and CONST variables. Functions are also block scoped (ONLY in strict mode)
+// * let and const are **block-scoped**; var is **function-scoped**.
+
+// 4.6 the Scope Chain
+// Scope chain: Order in which functions are written in the code has NOTHING to do with order in which functions were called.
 ///////////////////////////////////////////////////
 
 // NOTE 5. Scoping in Practice
