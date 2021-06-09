@@ -130,18 +130,151 @@
 ///////////////////////////////////////////////////
 
 // NOTE 8. The this Keyword
+// 8.1 **this** keyword/variable: Special variable that is created for every execution context (every function). Takes the value of (points to) the “owner” of the function in which the this keyword is used.
 
+// 8.2 IMPORTANT this is NOT static. It depends on how the function is called, and its value is only assigned when the function is actually called.
+// (1) Method --(this)--> Object is calling this method
+// (2) Simple function call --(this)--> undefined (*in strict mode. Otherwise: window (in the browser))
+// (3) Arrow functions --(this)--> this of surrounding function (**lexical this**)
+// (4) Event listener --(this)--> DOM element that the handler is attached to
+// (5) new, call, apply, bind
+// * this does NOT point to the function itself, and also NOT the its variable environment!
 ///////////////////////////////////////////////////
 
 // NOTE 9. The this Keyword in Practice
+/*
+console.log(this);
 
+const calcAge = function (birthYear) {
+  console.log(2037 - birthYear);
+  console.log(this);
+};
+calcAge(1991);
+
+const calcAgeArrow = birthYear => {
+  console.log(2037 - birthYear);
+  console.log(this);
+};
+calcAgeArrow(1980);
+
+const jonas = {
+  year: 1991,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
+};
+jonas.calcAge();
+
+const matilda = {
+  year: 2017,
+};
+
+matilda.calcAge = jonas.calcAge;
+matilda.calcAge();
+
+const f = jonas.calcAge;
+f();
+*/
 ///////////////////////////////////////////////////
 
 // NOTE 10. Regular Functions vs. Arrow Functions
+/*
+// var firstName = 'Matilda'; // Declared by var will be created as a property in global object
 
+const jonas = {
+  firstName: 'Jonas',
+  year: 1991,
+  calcAge: function () {
+    // console.log(this);
+    console.log(2037 - this.year);
+
+    // Solution 1
+    // const self = this; // self or that
+    // const isMillenial = function () {
+    //   console.log(self);
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    // };
+
+    // Solution 2
+    const isMillenial = () => {
+      console.log(this);
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillenial();
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+jonas.greet();
+jonas.calcAge();
+*/
+
+// arguments keyword
+/*
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr(2, 5);
+addExpr(2, 5, 8, 12);
+
+var addArrow = (a, b) => {
+  console.log(arguments);
+  return a + b;
+};
+addArrow(2, 5, 8);
+*/
 ///////////////////////////////////////////////////
 
 // NOTE 11. Primitives vs. Objects (Primitive vs. Reference Types)
+// 11.1 Primitive types
+// String, Number, Boolean, Undefined, Null, Symbol, BigInt
+// Call Stack: -identifier-address-value-
+// Heap: -address-value-
+/*
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName);
+*/
+
+// 11.2 Reference types
+// Object literal, Arrays, Functions ...
+/*
+const jessica = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+};
+const marriedJessica = jessica;
+marriedJessica.lastName = 'Davis';
+console.log('Before marriage:', jessica);
+console.log('After marriage: ', marriedJessica);
+marriedJessica = {};
+*/
+
+// 11.3 Copying objects: Object.assign() shallow copying
+/*
+const jessica2 = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+  family: ['Alice', 'Bob'],
+};
+
+const jessicaCopy = Object.assign({}, jessica2);
+jessicaCopy.lastName = 'Davis';
+
+jessicaCopy.family.push('Mary');
+jessicaCopy.family.push('John');
+
+console.log('Before marriage:', jessica2);
+console.log('After marriage: ', jessicaCopy);
+*/
 
 ///////////////////////////////////////////////////
 
