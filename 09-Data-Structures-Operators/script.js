@@ -1,5 +1,31 @@
 'use strict';
+// NOTE Index
 
+// 1.Destructuring Arrays
+// 2.Destructuring Objects
+// 3.The Spread Operator (...)
+// 4.Rest Pattern and Parameters
+// 5.Short Circuiting (&& and ||)
+// 6.The Nullish Coalescing Operator (??)
+// Coding Challenge #1
+// 7.Looping Arrays: The for-of Loop
+// 8.Enhanced Object Literals
+// 9.Optional Chaining (.?)
+// 10.Looping Objects: Object Keys, Values, and Entries
+// Coding Challenge #2
+
+// 11.Sets
+// 12.Maps:Fundamentals
+// 13.Maps:Iteration
+// 14.Summary:Which Data Structure to Use?
+// Coding Challenge #3
+
+// 15.Working with Strings-Part 1
+// 16.Working with Strings-Part 2
+// 17.Working with Strings-Part 3
+// Coding Challenge #4
+
+///////////////////////////////////////////////////
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
@@ -11,6 +37,10 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
 
   openingHours: {
     thu: {
@@ -27,3 +57,89 @@ const restaurant = {
     },
   },
 };
+///////////////////////////////////////////////////
+
+//NOTE 1.Destructuring Arrays
+// 1.1 Basic
+const arr = [2, 3, 4];
+const [a, b, c] = arr;
+// console.log(a, b, c);
+
+// 1.2 Skip the second item
+let [main, , secondary] = restaurant.categories;
+// console.log(main, secondary);
+
+// 1.3 Switching variables *NO temporary variable needed
+[secondary, main] = [main, secondary];
+// console.log(main, secondary);
+const [starter, mainCourse] = restaurant.order(2, 0);
+// console.log(starter, mainCourse);
+
+// 1.4 Nested destructuring
+const nested = [2, 4, [5, 6]];
+const [i, , [j, k]] = nested;
+// console.log(i, j, k);
+
+// 1.5 Default values
+const [p = 1, q = 1, r = 1] = [8, 9];
+console.log(p, q, r);
+///////////////////////////////////////////////////
+
+//NOTE 2.Destructuring Objects
+///////////////////////////////////////////////////
+
+//NOTE 3.The Spread Operator (...)
+///////////////////////////////////////////////////
+
+//NOTE 4.Rest Pattern and Parameters
+///////////////////////////////////////////////////
+
+//NOTE 5.Short Circuiting (&& and ||)
+///////////////////////////////////////////////////
+
+//NOTE 6.The Nullish Coalescing Operator (??)
+///////////////////////////////////////////////////
+
+// Coding Challenge #1
+///////////////////////////////////////////////////
+
+//NOTE 7.Looping Arrays: The for-of Loop
+///////////////////////////////////////////////////
+
+//NOTE 8.Enhanced Object Literals
+///////////////////////////////////////////////////
+
+//NOTE 9.Optional Chaining (.?)
+///////////////////////////////////////////////////
+
+//NOTE 10.Looping Objects: Object Keys, Values, and Entries
+///////////////////////////////////////////////////
+
+// Coding Challenge #2
+///////////////////////////////////////////////////
+
+//NOTE 11.Sets
+///////////////////////////////////////////////////
+
+//NOTE 12.Maps:Fundamentals
+///////////////////////////////////////////////////
+
+//NOTE 13.Maps:Iteration
+///////////////////////////////////////////////////
+
+//NOTE 14.Summary:Which Data Structure to Use?
+///////////////////////////////////////////////////
+
+// Coding Challenge #3
+///////////////////////////////////////////////////
+
+//NOTE 15.Working with Strings-Part 1
+///////////////////////////////////////////////////
+
+//NOTE 16.Working with Strings-Part 2
+///////////////////////////////////////////////////
+
+//NOTE 17.Working with Strings-Part 3
+///////////////////////////////////////////////////
+
+// Coding Challenge #4
