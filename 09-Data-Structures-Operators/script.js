@@ -59,6 +59,11 @@ const restaurant = {
     );
   },
 
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+
   openingHours: {
     thu: {
       open: 12,
@@ -155,7 +160,7 @@ const mainMenuCopy = [...restaurant.mainMenu];
 const wholeMenu = [...restaurant.mainMenu, ...restaurant.starterMenu];
 
 // IMPORTANT 3.4 Iterables: arrays, strings, maps, sets. NOT objects
-// (1) Multiple values separated by commas are only expected when we pass arguments into functions or we need a new array.
+// (1) Usage of spread operator: Multiple values separated by commas are only expected when we **pass arguments into functions** or we **need a new array**.
 // console.log(`${...'howie'}`); // NOT working!
 
 // (2) Real-world example
@@ -177,6 +182,38 @@ restaurantCopy.name = 'Ristorante Roma';
 ///////////////////////////////////////////////////
 
 //NOTE 4.Rest Pattern and Parameters
+
+// 4.1 Destructuring
+// SPREAD, because on RIGHT side of =
+const arr3 = [1, 2, ...[3, 4]];
+
+// REST, because on LEFT side of =
+// IMPORTANT Rest element must be LAST element; and ONLY one Rest element
+const [m, n, ...others] = [1, 2, 3, 4, 5];
+// console.log(m, n, others);
+
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+// console.log(pizza, risotto, otherFood);
+
+//Objects
+const { sat, ...weekdays } = restaurant.openingHours;
+// console.log(weekdays);
+
+// 4.2 Functions
+const add = function (...nums) {
+  let sum = 0;
+  for (let num of nums) {
+    sum += num;
+  }
+  return sum;
+};
+add(2, 3);
+add(5, 3, 7, 2);
+
+// restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
 
 ///////////////////////////////////////////////////
 
