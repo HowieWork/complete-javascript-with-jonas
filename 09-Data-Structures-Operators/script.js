@@ -42,6 +42,16 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
+  },
   openingHours: {
     thu: {
       open: 12,
@@ -82,10 +92,45 @@ const [i, , [j, k]] = nested;
 
 // 1.5 Default values
 const [p = 1, q = 1, r = 1] = [8, 9];
-console.log(p, q, r);
+// console.log(p, q, r);
 ///////////////////////////////////////////////////
 
 //NOTE 2.Destructuring Objects
+// 2.1 Basic *Rename
+const { name: restaurantName, openingHours, categories: tags } = restaurant;
+console.log(restaurantName, openingHours, tags);
+
+// 2.2 Default value
+const { menu = [], starterMenu: starters = [] } = restaurant;
+console.log(menu, starters);
+
+// 2.3 Mutating variables
+let x = 111;
+let y = 999;
+const obj = { x: 23, y: 7, z: 14 };
+
+// IMPORTANT Wrapped with ()
+({ x, y } = obj);
+console.log(x, y);
+
+// 2.4 Nested Objects
+const {
+  fri: { open, close },
+} = openingHours;
+console.log(open, close);
+
+// 2.5 Trick: Destructuring the argument immediately in a function
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'Via Del',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+restaurant.orderDelivery({
+  address: 'Via Del',
+  starterIndex: 2,
+});
 ///////////////////////////////////////////////////
 
 //NOTE 3.The Spread Operator (...)
