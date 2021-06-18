@@ -218,6 +218,26 @@ add(5, 3, 7, 2);
 ///////////////////////////////////////////////////
 
 //NOTE 5.Short Circuiting (&& and ||)
+// 5.1 || : Use ANY data type, return ANY data type, short-circuiting
+// console.log(undefined || null); // null
+
+// 5.2 Real-world example
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// console.log(guests1);
+const guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
+
+// 5.3 &&
+// console.log(0 && 2); // --> 0
+// console.log(1 && 2); // --> 2
+// console.log('Hello' && 23 && null && 'jonas'); // --> null
+
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('mushrooms', 'spinach');
+// }
+
+// restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+
 ///////////////////////////////////////////////////
 
 //NOTE 6.The Nullish Coalescing Operator (??)
