@@ -52,6 +52,13 @@ const restaurant = {
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
     );
   },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
+
   openingHours: {
     thu: {
       open: 12,
@@ -98,11 +105,11 @@ const [p = 1, q = 1, r = 1] = [8, 9];
 //NOTE 2.Destructuring Objects
 // 2.1 Basic *Rename
 const { name: restaurantName, openingHours, categories: tags } = restaurant;
-console.log(restaurantName, openingHours, tags);
+// console.log(restaurantName, openingHours, tags);
 
 // 2.2 Default value
 const { menu = [], starterMenu: starters = [] } = restaurant;
-console.log(menu, starters);
+// console.log(menu, starters);
 
 // 2.3 Mutating variables
 let x = 111;
@@ -111,32 +118,66 @@ const obj = { x: 23, y: 7, z: 14 };
 
 // IMPORTANT Wrapped with ()
 ({ x, y } = obj);
-console.log(x, y);
+// console.log(x, y);
 
 // 2.4 Nested Objects
 const {
   fri: { open, close },
 } = openingHours;
-console.log(open, close);
+// console.log(open, close);
 
-// 2.5 Trick: Destructuring the argument immediately in a function
-restaurant.orderDelivery({
-  time: '22:30',
-  address: 'Via Del',
-  mainIndex: 2,
-  starterIndex: 2,
-});
+// 2.5 IMPORTANT Trick: Destructuring the argument immediately in a function
+// restaurant.orderDelivery({
+//   time: '22:30',
+//   address: 'Via Del',
+//   mainIndex: 2,
+//   starterIndex: 2,
+// });
 
-restaurant.orderDelivery({
-  address: 'Via Del',
-  starterIndex: 2,
-});
+// restaurant.orderDelivery({
+//   address: 'Via Del',
+//   starterIndex: 2,
+// });
 ///////////////////////////////////////////////////
 
 //NOTE 3.The Spread Operator (...)
+// 3.1 Basics
+const arr2 = [7, 8, 9];
+const newArr = [1, 2, ...arr2];
+// console.log(...newArr);
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+// console.log(newMenu);
+
+// 3.2 Copy array *Shallow copy
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// 3.3 Join 2 arrays
+const wholeMenu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+
+// IMPORTANT 3.4 Iterables: arrays, strings, maps, sets. NOT objects
+// (1) Multiple values separated by commas are only expected when we pass arguments into functions or we need a new array.
+// console.log(`${...'howie'}`); // NOT working!
+
+// (2) Real-world example
+// const ingredients = [
+//   prompt("Let's make pasta! Ingredient 1?"),
+//   prompt("Let's make pasta! Ingredient 2?"),
+//   prompt("Let's make paredsta! Ingredient 3?"),
+// ];
+
+// restaurant.orderPasta(...ingredients);
+
+// (3) Objects
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+// console.log(restaurantCopy.name);
+// console.log(restaurant.name);
+
 ///////////////////////////////////////////////////
 
 //NOTE 4.Rest Pattern and Parameters
+
 ///////////////////////////////////////////////////
 
 //NOTE 5.Short Circuiting (&& and ||)
