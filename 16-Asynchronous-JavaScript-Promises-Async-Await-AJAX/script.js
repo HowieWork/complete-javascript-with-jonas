@@ -8,6 +8,7 @@
 // 5. Promises and the Fetch API
 // 6. Consume Promises
 // 7. Chaining Promises
+// 8. Handling Rejected Promises
 
 /////////////////////////////////////////////////////////
 // NOTE 1. Async JavaScript, AJAX and APIs
@@ -114,7 +115,7 @@ const renderCountry = function (data, className = '') {
     </article>
   `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1; // --> Moved to finally method in the end of promise chain
 };
 /*
 const getCountryAndNeighbour = function (country) {
@@ -201,10 +202,18 @@ const getCountryData = function (country) {
 /////////////////////////////////////////////////////////
 
 // NOTE 7. Chaining Promises
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1; // --> Moved to finally method in the end of promise chain
+};
+
 const getCountryAndNeighbour = function (country) {
   // Country 1
   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-    .then(response => response.json())
+    .then(
+      response => response.json()
+      // ,err => alert(err)
+    )
     .then(data => {
       renderCountry(data[0]);
 
@@ -213,9 +222,30 @@ const getCountryAndNeighbour = function (country) {
       // Country 2
       return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
     })
-    .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'));
+    .then(
+      response => response.json()
+      // ,err => alert(err)
+    )
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      console.log(err);
+      console.error(`${err} 💥 💥 💥 `);
+      renderError(`Something went wrong  💥 💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
 
-getCountryAndNeighbour('usa');
+btn.addEventListener('click', function () {
+  getCountryAndNeighbour('usa');
+});
+/////////////////////////////////////////////////////////
+
+// NOTE 8. Handling Rejected Promises
+// 8.1 TWO ways of handling rejections
+// (1) Pass a second callback function to THEN method (*see updated code in 7. chaining promises) *THEN <-- when promise is settled (fulfilled / rejected)
+// (2) Handle error in the end of promise chain using CATCH method *CATCH <-- when promise is rejected
+
+// * FINALLY method: callback function will ALWAYS be called whatever happened to promises
 /////////////////////////////////////////////////////////
