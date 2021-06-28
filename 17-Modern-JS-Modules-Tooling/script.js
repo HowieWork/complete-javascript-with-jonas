@@ -1,4 +1,3 @@
-'use strict';
 // NOTE Index
 // 1 An Overview of Modern JavaScript Development
 // 2 An Overview of Modules in JavaScript
