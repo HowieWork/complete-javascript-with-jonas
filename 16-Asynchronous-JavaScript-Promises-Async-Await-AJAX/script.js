@@ -11,13 +11,11 @@
 // 8. Handling Rejected Promises
 // 9. Throwing Errors Manually
 // Coding challenge #1
-
 // 10. Asynchronous Behind the Scenes: The Event Loop
 // 11. The Event Loop in Practice
 // 12. Building a Simple Promise
 // 13. Promisifying the Geolocation API
 // Coding challenge #2
-
 // 14. Consuming Promises with Async/Await
 // 15. Error Handling With try ... catch
 // 16. Returning Values from Async Functions
