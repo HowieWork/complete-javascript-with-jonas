@@ -13,7 +13,7 @@ Course link:
 
 [Complete JavaScript Roadmap](https://coggle.it/diagram/YMc51mCk-HbszsXT/t/star-complete-javascript-roadmap)
 
-I use Coggle to visualize core concepts and track projects progress.
+I use Coggle to visualize core concepts and track project progress.
 
 ## Projects
 
