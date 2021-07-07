@@ -8,6 +8,7 @@
 // 7 Introduction to NPM
 // 8 Bundling with Parcel and NPM Scripts
 // 9 Configuring Babel and Polyfilling
+
 // 10 Review: Writing Clean and Modern JavaScript
 // 11 Let's Fix Some Bad Code: Part 1
 // 12 Declarative and Functional JavaScript Principles
