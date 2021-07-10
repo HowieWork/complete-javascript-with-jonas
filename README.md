@@ -24,3 +24,5 @@ I use Coggle to visualize core concepts and track project progress.
 3. **Pig Game** [Demo](https://howiework.github.io/Pig-game/) | [GitHub](https://github.com/HowieWork/Pig-game)
 
 4. (updating) **Mapty** [Demo](https://howiework.github.io/Mapty/) | [GitHub](https://github.com/HowieWork/Mapty)
+
+5. (updating) **Forkify** [Demo](https://forkify-howie.netlify.app/) | [GitHub](https://github.com/HowieWork/Forkify)
