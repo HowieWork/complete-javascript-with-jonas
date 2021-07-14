@@ -92,26 +92,38 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (movements, dates, sort = false) {
   containerMovements.innerHTML = '';
+
+  const movDatesPairs = {};
+  movements.forEach(function (mov, i) {
+    movDatesPairs[mov] = dates[i];
+  });
 
   const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const date = new Date(Date.parse(movDatesPairs[movs[i]]));
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__date">${('0' + (date.getDate() + 1)).slice(
+          -2
+        )}/${('0' + (date.getMonth() + 1)).slice(
+      -2
+    )}/${date.getFullYear()}</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
+// displayMovements(account1.movements, account1.movementsDates, true);
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
@@ -122,12 +134,12 @@ const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -137,7 +149,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -153,7 +165,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc.movements, acc.movementsDates);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -175,7 +187,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -193,7 +205,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -217,7 +229,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -234,7 +246,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -255,19 +267,157 @@ btnClose.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(
+    currentAccount.movements,
+    currentAccount.movementsDates,
+    !sorted
+  );
   sorted = !sorted;
 });
 
-/////////////////////////////////////////////////
+window.addEventListener('load', function () {
+  const now = new Date(Date.now());
+  labelDate.textContent = `${('0' + (now.getDate() + 1)).slice(-2)}/${(
+    '0' +
+    (now.getMonth() + 1)
+  ).slice(-2)}/${now.getFullYear()}, ${now.getHours()}:${now.getMinutes()}`;
+});
+
 /////////////////////////////////////////////////
 // LECTURES
-// NOTE Index
-// 1. Converting and Checking Numbers
-// 2. Math and Rounding
-// 3. The Remainder Operator
-// 4. Working with BigInt
-// 5. Creating Dates
+// NOTE 1. Converting and Checking Numbers
+// 1.1 in JS: all numbers are **floating point number** (64 base 2). decimal NOT integers
+// (1) Binary base 2 - 0 1
+// console.log(23 === 23.0); // true
+// console.log(0.1 + 0.2); //0.30000000000000004
+
+// (2) Unary plus +
+
+// (3) Number.parse methods
+// Number.parseInt(string, radix)
+// IMPORTANT radix: An integer between 2 and 36 that represents the radix (the base in mathematical numeral systems) of the string.
+// console.log(Number.parseInt('  3.09dsaddsadas', 10)); // 3
+// console.log(Number.parseFloat('  3.09dsaddsadas', 10)); // 3.09
+
+// (4) isNaN isFinite
+// check if value is NaN
+// console.log(Number.isNaN(NaN)); // true
+
+// IMPORTANT isFinite is better for checking whether a number or not
+/*
+console.log(Number.isFinite(23 / 0)); // false
+console.log(Number.isFinite(23 / 2)); // true
+console.log(Number.isFinite('23')); // false
+console.log(Number.isFinite(+'23x')); // false
+
+console.log(Number.isInteger(23.0)); // true
+console.log(Number.isInteger(23)); // true
+console.log(Number.isInteger(23.2)); // false
+*/
+
+/////////////////////////////////////////////////
+// NOTE 2. Math and Rounding
+// 2.1 Math.sqrt(25) || 25 ** (1/2)
+
+// 2.2 Math.max() * coertion NO parsing
+// Math.min()
+
+// 2.3 Math.PI
+
+// 2.5 ROUNDING:
+// Math.trunc() Math.floor() Math.ceil()
+const randomInt = (min, max) => Math.trunc(Math.random() * (max - min)) + 1;
+// console.log(randomInt(0, 6));
+
+// Math.toFixed() *return a STRING
+// console.log(typeof (23.934456).toFixed(2)); // string
+/////////////////////////////////////////////////
+// NOTE 3. The Remainder Operator: %
+
+// labelBalance.addEventListener('click', function (e) {
+//   e.preventDefault();
+//   const nodesArr = [...document.querySelectorAll('.movements__row')];
+//   nodesArr.forEach((node, i) => {
+//     if (i % 2 === 0) node.style.backgroundColor = 'orangered';
+//   });
+// });
+/////////////////////////////////////////////////
+
+//NOTE 4. Working with BigInt
+// Only 53 digits used for number
+// Max SAFE integer
+/*
+console.log(2 ** 53 - 1); //9007199254740991
+console.log(Number.MAX_SAFE_INTEGER); //9007199254740991
+console.log(2 ** 53 + 1); //9007199254740992 WRONG!
+*/
+// BigInt : Big Integer
+// console.log(357684354643135454665434n);
+// console.log(BigInt(357684)); // Used for small numbers
+// Operator works the same with BigInt
+// console.log(Math.sqrt(16n)); // NOT working
+
+// IMPORTANT Exceptions
+/*
+console.log(20n > 15); // true
+console.log(20n === 20); // false: two different primitive types
+console.log(typeof 20n); // bigint
+console.log(20n == '20'); // true
+console.log(20n === '20'); // false
+const huge = 46451335431354654364n;
+console.log(huge + ' is really HUGE!!!'); // still a string
+*/
+
+// Divisions
+/*
+console.log(10n / 3n); // 3n
+console.log(10n % 3n); // 1n
+*/
+/////////////////////////////////////////////////
+
+//NOTE 5. Creating Dates
+// 5.1 FOUR ways of creating dates
+// const now = new Date();
+// console.log(now);
+
+// Parsing
+// console.log(new Date('Jul 14 2021 11:56:36'));
+// console.log(new Date('December 24, 2015'));
+
+/*
+console.log(new Date(account1.movementsDates[0]));
+console.log(new Date(0));
+console.log(new Date(3 * 24 * 60 * 60 * 1000)); // convert to milliseconds
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future); // Thu Nov 19 2037 15:23:00 GMT-0500 (Eastern Standard Time)
+console.log(future.getFullYear()); // IMPORTANT 2037
+console.log(future.getYear()); // 137
+console.log(future.getMonth());
+console.log(future.getDate());
+console.log(future.getDay());
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+
+// FORMATTING
+console.log(future.toISOString());
+const elapseTime = future.getTime();
+console.log(new Date(elapseTime)); // the same as future
+
+console.log(Date.now());
+
+future.setFullYear(2040);
+console.log(future);
+*/
+
+const future = new Date(2037, 10, 19, 15, 23);
+const futureDateString = future.toISOString();
+console.log(new Date(Date.parse(futureDateString)).getFullYear());
+
+const test1 = account1.movementsDates[0];
+console.log(new Date(Date.parse(test1)).getDate());
+/////////////////////////////////////////////////
+
 // 6. Adding Dates to "Bankist" App
 // 7. Operations with Dates
 // 8. Internationalizing Dates (Intl)
