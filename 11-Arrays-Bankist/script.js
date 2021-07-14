@@ -238,6 +238,21 @@ btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount.movements, !sorted);
   sorted = !sorted;
 });
+
+labelBalance.addEventListener('click', function (e) {
+  e.preventDefault();
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value')
+  );
+  console.log(movementsUI);
+
+  const movementsValues = movementsUI.map(node =>
+    Number(node.textContent.slice(0, -1).replace(/\s/g, ''))
+  );
+  labelBalance.textContent = `${movementsValues.reduce(
+    (cur, next) => cur + next
+  )}€`;
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -249,4 +264,33 @@ const currencies = new Map([
 ]);
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements.reverse());
 /////////////////////////////////////////////////
+// NOTE More ways of creating and filling arrays
+const x = new Array(7); // [empty * 7]
+
+// 1.1 Empty arrays + fill method
+// x.fill(1);
+// x.fill(1, 3);
+// x.fill(1, 3, 5);
+// console.log(x);
+
+// 1.2 Array.from
+const y = Array.from({ length: 7 }, () => 1);
+
+// const z = Array.from({ length: 7 }, (cur, i) => i + 1);
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+
+// Challenge: generate one hundred random dice rolls
+const oneHundredRandomDice = Array.from({ length: 100 }, (cur, _) => {
+  cur = Math.ceil(Math.random() * 6);
+  return cur;
+});
+// console.log(oneHundredRandomDice);
+
+// Real-world usage of Array.from
+const testNodes = document.querySelectorAll('.movements__value');
+const testNodesArr = Array.from(testNodes);
+const testNodesValues = testNodesArr.map(node =>
+  Number(node.innerText.slice(0, -1).replace(/\s/g, ''))
+);
