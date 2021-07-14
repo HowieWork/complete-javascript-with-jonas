@@ -95,7 +95,7 @@ nav {
 
   /* NOTE This creates the fade in/out animation */
   /* FIXME Change opacity */
-  opacity: 0;
+  opacity: 1;
   transition: all 1s;
 }
 

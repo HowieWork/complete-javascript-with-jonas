@@ -61,9 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  movements.forEach((mov, i) => {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach((mov, i) => {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
       <div class="movements__row">
@@ -187,6 +190,54 @@ btnTransfer.addEventListener('click', function (e) {
   updateUI(currentAccount);
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = +inputLoanAmount.value;
+
+  // Clear input
+  inputLoanAmount.value = '';
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    // Update UI
+    updateUI(currentAccount);
+    return;
+  } else {
+    console.log('Request too much loan.');
+    return;
+  }
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  const username = inputCloseUsername.value;
+  const pin = inputClosePin.value;
+  const index = accounts.findIndex(acc => acc.username === username);
+
+  // Clear inputs
+  inputCloseUsername.value = inputClosePin.value = '';
+
+  if (username !== currentAccount.username) {
+    console.log('Username is wrong');
+    return;
+  }
+  if (+pin !== currentAccount.pin) {
+    console.log('Pin is wrong!');
+    return;
+  }
+
+  accounts.splice(index, 1);
+
+  containerApp.style.opacity = 0;
+  labelWelcome.textContent = 'Log in to get started';
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
