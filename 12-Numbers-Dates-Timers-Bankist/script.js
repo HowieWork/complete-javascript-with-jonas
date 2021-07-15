@@ -92,15 +92,17 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, dates, sort = false) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
   const movDatesPairs = {};
-  movements.forEach(function (mov, i) {
-    movDatesPairs[mov] = dates[i];
+  acc.movements.forEach(function (mov, i) {
+    movDatesPairs[mov] = acc.movementsDates[i];
   });
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
@@ -111,11 +113,11 @@ const displayMovements = function (movements, dates, sort = false) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__date">${('0' + (date.getDate() + 1)).slice(
-          -2
-        )}/${('0' + (date.getMonth() + 1)).slice(
-      -2
-    )}/${date.getFullYear()}</div>
+        <div class="movements__date">${(date.getDate() + 1)
+          .toString()
+          .padStart(2, 0)}/${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, 0)}/${date.getFullYear()}</div>
         <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
@@ -165,7 +167,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements, acc.movementsDates);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -267,20 +269,21 @@ btnClose.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(
-    currentAccount.movements,
-    currentAccount.movementsDates,
-    !sorted
-  );
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
 
 window.addEventListener('load', function () {
   const now = new Date(Date.now());
-  labelDate.textContent = `${('0' + (now.getDate() + 1)).slice(-2)}/${(
-    '0' +
-    (now.getMonth() + 1)
-  ).slice(-2)}/${now.getFullYear()}, ${now.getHours()}:${now.getMinutes()}`;
+
+  labelDate.textContent = `${now.getDate().toString().padStart(2, 0)}/${(
+    now.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, 0)}/${now.getFullYear()}, ${now
+    .getHours()
+    .toString()
+    .padStart(2, 0)}:${now.getMinutes().toString().padStart(2, 0)}`;
 });
 
 /////////////////////////////////////////////////
@@ -410,12 +413,15 @@ future.setFullYear(2040);
 console.log(future);
 */
 
+// Data.parse
+/*
 const future = new Date(2037, 10, 19, 15, 23);
 const futureDateString = future.toISOString();
 console.log(new Date(Date.parse(futureDateString)).getFullYear());
 
 const test1 = account1.movementsDates[0];
 console.log(new Date(Date.parse(test1)).getDate());
+*/
 /////////////////////////////////////////////////
 
 // 6. Adding Dates to "Bankist" App
