@@ -8,6 +8,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+const header = document.querySelector('.header');
 const nav = document.querySelector('.nav');
 
 const tabs = document.querySelectorAll('.operations__tab');
@@ -139,6 +140,69 @@ nav.addEventListener('mouseout', handleHover.bind(1.0));
 // Passing "argument" into handler
 // nav.addEventListener('mouseover', handleHover.bind(0.5));
 // nav.addEventListener('mouseout', handleHover.bind(1));
+
+///////////////////////////////////////
+
+// Sticky navigation
+/*
+// 'scroll' event is not a good performance
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords.top);
+console.log(window.scrollY);
+window.addEventListener('scroll', function () {
+  if (this.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+*/
+/*
+const obsCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+const obsOptions = {
+  // root: viewport
+  root: null,
+  threshold: 0,
+};
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+*/
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  if (entry.isIntersecting) nav.classList.remove('sticky');
+};
+const navHeight = nav.getBoundingClientRect().height;
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
+///////////////////////////////////////
+
+// Reveal sections
+const allSections = document.querySelectorAll('.section');
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 ///////////////////////////////////////
 /*
 // NOTE 1. Selecting, Creating/Inserting, Deleting elements
