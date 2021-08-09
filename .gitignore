@@ -1,2 +1,4 @@
 .prettierrc
 .DS_Store
+
+18-forkify/node_modules
